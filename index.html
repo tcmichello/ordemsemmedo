@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- ============================================================
+     COMO EDITAR — procure por "EDITE". Ainda faltam:
+     1. Conferir o usuário do Instagram (aqui está tc_michello;
+        na página do QueroApoiar aparece tcmichello, sem underline)
+     2. Revisar os textos da bio e das bandeiras
+     A logo é vetor e está embutida no código.
+     A FOTO é um arquivo separado: coloque foto.jpg na mesma pasta.
+     O valor da vaquinha é lido ao vivo da plataforma (script no final).
+     ============================================================ -->
+
+<title>Coronel Michello — Pré-candidato a Deputado Distrital</title>
+<meta name="description" content="Coronel Michello, pré-candidato a Deputado Distrital pelo Distrito Federal.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="foto.jpg">
+<meta property="og:title" content="Coronel Michello">
+<meta property="og:description" content="Pré-candidato a Deputado Distrital pelo DF.">
+<meta name="theme-color" content="#0A1734">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@1,700;1,800&family=IBM+Plex+Mono:wght@500&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  /* cores tiradas da própria logo */
+  --noite:#0A1734;
+  --marinho:#122A5C;
+  --ouro:#D9B046;
+  --papel:#F6F7FA;
+  --concreto:#8D9BB8;
+  --tinta-marca:var(--papel);
+
+  --display:'Archivo',system-ui,sans-serif;
+  --texto:'IBM Plex Sans',system-ui,sans-serif;
+  --dado:'IBM Plex Mono',ui-monospace,monospace;
+
+  /* quanto da meta já foi arrecadado (o script atualiza sozinho) */
+  --progresso:1.2%;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--noite);color:var(--papel);
+  font-family:var(--texto);line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  padding-bottom:92px;
+}
+.wrap{max-width:520px;margin:0 auto;padding:0 22px}
+
+/* ---------- assinatura: as nervuras da Catedral + régua ---------- */
+.divisor{display:flex;align-items:flex-end;gap:12px;margin:0 0 18px}
+.divisor .nervuras{width:52px;height:30px;flex:none;display:block}
+.divisor .regua{flex:1;height:2px;background:var(--ouro);margin-bottom:1px;opacity:.55}
+
+.rotulo{
+  font-family:var(--dado);font-size:10.5px;font-weight:500;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--ouro);
+}
+
+/* ---------- topo ---------- */
+.topo{padding:36px 0 30px;text-align:center}
+.marca{display:block;width:100%;max-width:340px;height:auto;margin:0 auto 30px}
+
+.moldura{position:relative;width:176px;height:176px;margin:0 auto 20px}
+.moldura::before,.moldura::after{
+  content:"";position:absolute;width:28px;height:28px;border:2px solid var(--ouro);
+}
+.moldura::before{top:-8px;left:-8px;border-right:0;border-bottom:0}
+.moldura::after{bottom:-8px;right:-8px;border-left:0;border-top:0}
+.foto{
+  position:absolute;inset:0;border-radius:50%;overflow:hidden;
+  background:var(--marinho);border:2px solid rgba(217,176,70,.55);
+  display:grid;place-items:center;
+}
+.foto img{width:100%;height:100%;object-fit:cover;object-position:center 30%}
+
+.lema{
+  font-family:var(--display);font-style:italic;font-weight:800;
+  text-transform:uppercase;font-size:20px;line-height:1.05;margin:20px 0 4px;
+}
+.lema b{color:var(--ouro);font-weight:800}
+.sublema{font-size:13.5px;color:var(--concreto);margin-bottom:14px}
+
+.ficha{
+  display:inline-flex;gap:9px;flex-wrap:wrap;justify-content:center;
+  border-top:1.5px solid rgba(246,247,250,.16);
+  border-bottom:1.5px solid rgba(246,247,250,.16);
+  padding:11px 4px;margin-top:4px;
+  font-family:var(--dado);font-size:10.5px;font-weight:500;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--papel);
+}
+.ficha i{font-style:normal;color:var(--ouro)}
+
+/* ---------- botões ---------- */
+.botoes{display:grid;gap:10px;margin-top:26px;text-align:left}
+.btn{
+  display:flex;align-items:center;gap:13px;
+  padding:15px 17px;border-radius:5px;text-decoration:none;color:var(--papel);
+  background:var(--marinho);border:1.5px solid rgba(246,247,250,.14);
+  font-weight:600;font-size:15.5px;
+  transition:transform .15s ease,border-color .15s ease;
+}
+.btn:hover{transform:translateY(-2px);border-color:var(--ouro)}
+.btn svg{width:21px;height:21px;flex:none;fill:currentColor}
+.btn small{margin-left:auto;font-family:var(--dado);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--concreto)}
+.btn--destaque{background:var(--ouro);border-color:var(--ouro);color:#0A1734}
+.btn--destaque small{color:rgba(10,23,52,.65)}
+a:focus-visible,button:focus-visible{outline:3px solid var(--ouro);outline-offset:3px}
+
+/* ---------- seções ---------- */
+.bloco{padding:36px 0}
+.bloco h2{
+  font-family:var(--display);font-style:italic;font-weight:800;
+  text-transform:uppercase;font-size:26px;line-height:1.05;
+  letter-spacing:-.01em;margin:6px 0 14px;
+}
+.bloco p{color:#C3CCDF;font-size:15.5px}
+.bloco p + p{margin-top:12px}
+
+.bandeiras{list-style:none;margin-top:20px}
+.bandeiras li{padding:16px 0;border-top:1.5px solid rgba(246,247,250,.13);display:flex;gap:14px}
+.bandeiras li:last-child{border-bottom:1.5px solid rgba(246,247,250,.13)}
+.bandeiras .num{font-family:var(--dado);font-size:11px;font-weight:500;color:var(--ouro);padding-top:4px;flex:none}
+.bandeiras h3{font-family:var(--display);font-style:italic;font-weight:700;text-transform:uppercase;font-size:17px}
+.bandeiras p{font-size:14.5px;margin-top:2px;color:var(--concreto)}
+
+/* ---------- vaquinha ---------- */
+.vaquinha{background:var(--marinho);padding:38px 0 40px}
+.meta{margin-top:22px}
+.trilho{height:13px;border-radius:99px;background:rgba(246,247,250,.15);overflow:hidden}
+.barra{height:100%;width:var(--progresso);min-width:10px;background:var(--ouro);border-radius:99px}
+.valores{display:flex;justify-content:space-between;margin-top:10px;font-family:var(--dado);font-size:12px;color:var(--concreto)}
+.valores b{color:var(--papel);font-weight:500}
+.aovivo{
+  font-family:var(--dado);font-size:10.5px;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--concreto);margin-top:9px;
+  display:flex;align-items:center;gap:7px;
+}
+.aovivo::before{
+  content:"";width:7px;height:7px;border-radius:50%;background:var(--ouro);
+  flex:none;animation:pulso 2s ease-in-out infinite;
+}
+@keyframes pulso{0%,100%{opacity:1}50%{opacity:.25}}
+.vaquinha .btn{background:var(--ouro);border-color:var(--ouro);color:#0A1734;justify-content:center}
+
+/* ---------- rodapé ---------- */
+footer{padding:32px 0 40px;border-top:1.5px solid rgba(246,247,250,.13);text-align:center}
+footer p{font-family:var(--dado);font-size:10.5px;line-height:2.1;color:var(--concreto);letter-spacing:.05em}
+
+/* ---------- barra fixa ---------- */
+.fixa{
+  position:fixed;left:0;right:0;bottom:0;z-index:20;
+  background:rgba(10,23,52,.95);backdrop-filter:blur(10px);
+  border-top:1.5px solid rgba(217,176,70,.35);padding:12px 22px 16px;
+}
+.fixa .wrap{padding:0;display:flex;gap:10px}
+.fixa a{
+  flex:1;display:grid;place-items:center;padding:14px;border-radius:5px;
+  font-weight:600;font-size:15px;text-decoration:none;
+  background:var(--ouro);color:#0A1734;
+}
+.fixa button{
+  flex:0 0 54px;display:grid;place-items:center;border-radius:5px;cursor:pointer;
+  background:transparent;color:var(--papel);border:1.5px solid rgba(246,247,250,.28);
+}
+
+.revela{opacity:0;transform:translateY(14px);transition:opacity .6s ease,transform .6s ease}
+.revela.visivel{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  .revela{opacity:1;transform:none}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+<!-- ==================== TOPO ==================== -->
+<header class="topo">
+  <div class="wrap">
+
+    <!-- A logo é vetor, embutida aqui. Não precisa de arquivo de imagem. -->
+    <h1>
+<svg class="marca" viewBox="0 0 2102 722" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Coronel Michello, pre-candidato a Deputado Distrital">
+<g transform="translate(0.000000,722.000000) scale(0.100000,-0.100000)"
+fill="var(--ouro)" stroke="none">
+<path d="M6801 6665 c-38 -44 -39 -52 -2 -57 34 -5 54 4 94 40 40 38 35 52
+-17 52 -38 0 -48 -5 -75 -35z M5840 6570 c-45 -5 -45 -5 -45 -220 0 -215 0
+-215 44 -218 54 -4 61 5 61 84 0 70 0 70 80 73 30 1 70 7 87 12 86 27 109 171
+36 229 -46 36 -155 52 -263 40z m191 -108 c38 -48 -13 -106 -89 -100 -37 3
+-37 3 -40 52 -5 74 0 79 60 74 36 -4 57 -12 69 -26z M6280 6570 c-55 -5 -55
+-5 -55 -220 0 -215 0 -215 45 -215 45 0 45 0 48 72 2 61 6 73 22 78 36 11 56
+-4 97 -78 40 -72 40 -72 92 -75 28 -2 51 0 51 3 0 9 -59 118 -71 130 -16 17
+-9 40 20 66 58 51 53 151 -10 201 -41 33 -134 48 -239 38z m158 -96 c15 -11
+22 -25 22 -50 0 -41 -29 -57 -94 -52 -41 3 -41 3 -44 52 -2 32 1 52 10 57 21
+14 82 10 106 -7z M6680 6571 c-25 -7 -25 -7 -25 -221 l0 -215 157 -3 c157 -3
+157 -3 164 23 10 41 -8 50 -119 55 -102 5 -102 5 -105 46 -3 41 -3 41 59 48
+34 3 79 6 100 6 33 0 40 4 45 26 10 39 -9 49 -109 54 -92 5 -92 5 -95 39 -2
+18 2 39 8 45 6 6 55 13 108 16 97 5 97 5 100 34 2 16 0 32 -5 37 -11 11 -249
+20 -283 10z M7434 6556 c-73 -34 -94 -80 -94 -209 0 -148 30 -198 133 -219
+108 -23 205 16 237 93 18 42 7 59 -38 59 -33 0 -43 -6 -71 -40 -25 -32 -38
+-40 -64 -40 -66 1 -97 49 -97 149 0 81 12 114 47 130 53 24 103 9 128 -40 14
+-26 21 -30 52 -27 126 11 -2 168 -137 167 -25 0 -67 -10 -96 -23z M8745 6573
+c-22 -3 -43 -10 -47 -16 -14 -21 -10 -415 4 -423 7 -4 63 -8 124 -7 190 0 234
+41 234 221 0 112 -17 158 -72 194 -22 15 -160 41 -191 36 -7 -1 -30 -3 -52 -5z
+m181 -106 c24 -21 28 -32 32 -104 7 -124 -24 -163 -124 -151 -29 3 -29 4 -38
+90 -11 116 -2 175 27 181 51 10 77 6 103 -16z M9925 6571 c-26 -11 -47 -57
+-125 -276 -12 -33 -28 -75 -36 -93 -25 -59 -20 -72 31 -72 42 0 46 2 62 38 17
+35 20 37 73 40 85 5 119 -5 131 -36 13 -34 26 -42 72 -42 24 0 37 5 37 13 0
+16 -68 213 -100 292 -5 11 -16 41 -26 67 -9 26 -22 52 -29 58 -18 15 -67 21
+-90 11z m72 -202 c24 -69 22 -72 -48 -67 -50 3 -52 11 -19 86 26 58 42 53 67
+-19z M10188 6572 c-29 -3 -43 -29 -33 -61 6 -19 43 -31 96 -31 34 0 31 14 34
+-185 2 -77 3 -146 4 -152 1 -11 86 -20 93 -10 1 1 4 78 7 172 6 169 6 169 66
+180 53 9 60 13 63 35 1 14 -1 30 -5 36 -8 11 -265 24 -325 16z M10678 6566
+c-85 -26 -118 -90 -118 -227 1 -140 35 -192 140 -211 113 -19 183 8 224 89 25
+49 22 211 -4 263 -42 83 -140 118 -242 86z m127 -96 c27 -30 38 -105 24 -178
+-12 -67 -33 -92 -77 -92 -63 0 -97 66 -90 175 4 59 8 71 32 91 34 30 86 32
+111 4z M11765 6570 c-40 -5 -40 -5 -40 -220 l0 -215 123 -3 c182 -4 220 22
+242 165 18 113 -16 215 -81 248 -34 18 -181 33 -244 25z m174 -95 c41 -21 54
+-62 49 -151 -6 -96 -16 -107 -100 -108 -63 -1 -63 -1 -66 131 -2 119 -1 132
+15 136 36 9 75 7 102 -8z M12305 6570 l-130 -5 -2 -205 c-2 -113 1 -211 6
+-219 7 -11 41 -13 155 -13 80 1 151 4 156 7 14 9 13 48 -2 63 -8 8 -46 12
+-103 12 -101 0 -115 7 -115 56 0 37 8 40 119 43 87 2 91 4 91 37 0 32 -32 44
+-119 44 -74 0 -91 10 -91 52 0 38 24 48 117 48 91 0 106 7 101 45 -4 38 -22
+41 -183 35z M13458 6572 c-30 -4 -41 -23 -32 -58 6 -24 26 -30 77 -24 42 4 47
+-14 47 -186 0 -164 0 -164 24 -170 13 -3 37 -4 52 -2 29 3 29 3 32 176 3 193
+-7 172 83 177 41 3 63 39 41 71 -7 11 -264 24 -324 16z M14285 6573 c-11 -3
+-23 -10 -27 -17 -9 -13 -11 -388 -2 -410 9 -24 235 -23 284 2 65 32 80 69 80
+196 0 184 -33 214 -250 230 -36 2 -74 2 -85 -1z m206 -109 c39 -35 46 -151 13
+-216 -15 -29 -56 -42 -110 -36 -29 3 -29 3 -32 132 -2 97 1 132 10 138 19 13
+98 1 119 -18z M14815 6568 c-90 -32 -124 -91 -125 -213 0 -146 33 -205 124
+-226 69 -15 169 1 202 32 53 50 77 207 46 300 -30 89 -151 141 -247 107z m108
+-87 c66 -25 64 -235 -2 -271 -33 -17 -67 -11 -95 16 -24 25 -26 32 -26 121 0
+86 2 96 25 118 25 26 57 31 98 16z M16002 6554 c-70 -42 -91 -108 -53 -170 19
+-31 126 -84 169 -84 28 0 62 -29 62 -54 0 -58 -141 -59 -163 -1 -8 19 -70 20
+-86 1 -26 -31 29 -97 94 -115 161 -44 295 41 255 163 -15 46 -42 63 -160 97
+-52 15 -80 35 -80 59 0 46 65 53 121 14 30 -20 44 -24 73 -19 44 9 47 30 11
+73 -52 62 -171 79 -243 36z M16338 6569 c-12 -7 -14 -67 -3 -77 3 -4 30 -9 58
+-12 52 -5 52 -5 54 -155 4 -201 2 -197 61 -193 47 3 47 3 50 176 2 170 3 172
+25 173 12 1 29 2 37 3 8 2 25 3 36 4 15 1 23 11 27 30 10 51 -7 56 -179 57
+-85 0 -160 -3 -166 -6z M17476 6572 c-125 -3 -142 -11 -129 -60 6 -25 24 -32
+76 -30 21 1 42 -3 47 -8 5 -5 11 -84 12 -174 3 -165 3 -165 48 -165 45 0 45 0
+50 170 6 190 1 182 91 184 29 1 38 6 42 23 15 57 -18 66 -237 60z M7902 6553
+c-9 -17 -48 -122 -123 -327 -16 -43 -26 -82 -23 -87 8 -13 78 -11 92 3 7 7 12
+20 12 30 0 25 39 38 113 38 70 0 76 -3 97 -45 13 -24 23 -31 54 -33 48 -4 64
+9 48 40 -7 13 -20 48 -31 78 -10 30 -31 87 -46 125 -14 39 -33 90 -42 115 -27
+79 -28 80 -88 80 -42 0 -56 -4 -63 -17z m78 -125 c0 -7 10 -36 22 -65 12 -29
+19 -56 15 -59 -10 -10 -87 -8 -98 3 -13 13 29 133 47 133 8 0 14 -6 14 -12z
+M8243 6558 c-12 -19 -13 -401 -1 -415 15 -19 85 -17 92 3 3 9 6 58 6 110 0 59
+4 94 10 94 6 0 43 -49 82 -110 72 -110 72 -110 114 -110 29 0 44 5 48 16 12
+31 7 399 -6 412 -18 18 -75 15 -82 -4 -3 -9 -6 -63 -6 -121 0 -79 -3 -104 -12
+-101 -7 3 -36 40 -65 84 -103 157 -100 154 -137 154 -19 0 -38 -6 -43 -12z
+M9147 6563 c-9 -15 -6 -409 3 -423 11 -17 81 -14 92 3 9 14 11 389 2 411 -6
+17 -88 24 -97 9z M9347 6555 c-10 -25 -8 -398 2 -413 6 -10 35 -14 112 -13
+138 1 165 8 204 46 28 29 34 44 44 112 8 54 8 94 1 131 -12 68 -22 85 -66 119
+-35 26 -43 28 -164 31 -112 4 -128 2 -133 -13z m237 -95 c27 -27 30 -200 4
+-226 -23 -23 -127 -32 -139 -13 -5 8 -9 67 -9 131 0 101 2 118 18 128 25 15
+103 3 126 -20z M11245 6518 c-14 -29 -25 -60 -25 -68 0 -9 -4 -20 -9 -25 -4
+-6 -15 -30 -24 -55 -8 -25 -29 -83 -46 -129 -17 -46 -31 -90 -31 -98 0 -20 90
+-14 100 7 24 53 27 55 76 58 89 6 127 -5 144 -41 13 -27 21 -33 54 -35 53 -5
+60 6 37 64 -10 27 -29 76 -41 109 -12 33 -30 79 -41 103 -10 23 -19 49 -19 57
+0 9 -9 35 -21 60 -21 45 -21 45 -76 45 -54 0 -54 0 -78 -52z m113 -147 c21
+-52 23 -65 11 -72 -13 -8 -88 -3 -98 7 -4 4 25 105 37 127 9 18 26 -2 50 -62z
+M12582 6557 c-9 -11 -12 -69 -10 -218 3 -204 3 -204 47 -207 55 -4 61 5 61 86
+0 34 1 62 3 62 118 9 182 22 203 41 66 62 56 179 -19 223 -43 27 -266 37 -285
+13z m216 -83 c35 -24 31 -79 -8 -99 -30 -16 -67 -19 -94 -9 -20 8 -23 110 -3
+117 26 11 84 6 105 -9z M13002 6558 c-16 -16 -16 -253 1 -314 23 -89 96 -132
+203 -121 122 13 152 58 161 245 3 70 1 143 -4 162 -8 32 -13 35 -51 38 -29 2
+-42 -1 -43 -10 0 -7 -2 -80 -5 -162 -2 -81 -7 -152 -10 -157 -11 -19 -67 -40
+-90 -35 -13 4 -33 16 -44 28 -18 20 -20 35 -20 164 0 78 -3 149 -6 158 -7 19
+-74 22 -92 4z M13922 6557 c-6 -6 -17 -30 -25 -52 -8 -22 -39 -109 -70 -194
+-32 -85 -57 -159 -57 -166 0 -16 59 -26 82 -14 10 5 21 21 24 35 8 32 39 44
+113 44 61 0 77 -8 104 -52 15 -23 25 -28 58 -28 41 0 41 0 35 33 -3 17 -15 56
+-26 85 -11 28 -29 76 -39 105 -42 116 -73 193 -83 205 -14 16 -102 16 -116 -1z
+m88 -169 c36 -78 19 -108 -51 -93 -29 7 -30 9 -25 40 8 42 34 95 47 95 6 0 19
+-19 29 -42z M15300 6551 c-16 -30 -13 -383 3 -405 12 -16 27 -18 143 -14 144
+4 160 10 193 69 31 55 31 234 -1 290 -33 58 -90 79 -222 79 -94 0 -106 -2
+-116 -19z m229 -89 c33 -32 47 -112 32 -176 -14 -58 -32 -70 -99 -71 -57 0
+-57 0 -60 132 -3 132 -3 132 25 136 62 9 75 6 102 -21z M15747 6543 c-3 -15
+-6 -102 -6 -193 0 -225 -1 -222 57 -218 47 3 47 3 47 218 0 215 0 215 -47 218
+-44 3 -46 1 -51 -25z M16755 6560 c-10 -17 -19 -349 -11 -393 7 -39 37 -54 79
+-38 21 8 25 17 30 77 8 79 16 92 54 78 19 -6 38 -30 66 -82 39 -72 39 -72 83
+-72 55 0 56 11 12 97 -28 53 -31 65 -20 80 43 61 52 81 52 121 0 52 -20 93
+-57 118 -35 23 -275 35 -288 14z m225 -92 c11 -12 20 -26 20 -31 0 -13 -22
+-51 -34 -59 -19 -13 -93 -9 -105 6 -13 16 -12 75 2 94 16 21 93 15 117 -10z
+M17186 6533 c-8 -49 -8 -351 0 -380 5 -19 13 -23 49 -23 30 0 45 5 49 16 12
+31 7 399 -6 412 -7 7 -29 12 -49 12 -34 0 -37 -2 -43 -37z M17849 6553 c-9 -10
+-27 -49 -41 -88 -14 -38 -45 -118 -67 -177 -23 -58 -41 -118 -41 -133 0 -25 3
+-26 42 -23 34 2 45 8 55 28 20 40 42 50 112 50 76 0 82 -3 105 -47 14 -29 22
+-33 56 -33 60 0 60 -6 -12 190 -11 30 -24 64 -28 75 -4 11 -18 47 -30 80 -33
+90 -32 90 -87 93 -37 2 -53 -1 -64 -15z m97 -195 c21 -63 12 -75 -48 -62 -50
+11 -52 26 -16 104 19 41 21 43 34 26 7 -11 21 -41 30 -68z M18185
+6558 c-3 -8 -4 -106 -3 -218 l3 -205 152 -3 c144 -2 152 -1 158 17 3 11 1 29
+-5 41 -9 18 -20 20 -93 20 -120 0 -116 -7 -119 190 -3 165 -3 165 -46 168 -28
+2 -44 -1 -47 -10z M7053 6354 c-7 -3 -13 -21 -13 -40 0 -42 13 -46 130 -42 85
+3 85 3 85 43 0 40 0 40 -95 42 -52 1 -101 -1 -107 -3z M3847 5983 c-3 -5 -10
+-110 -16 -233 -21 -420 -51 -1024 -66 -1315 -9 -159 -20 -400 -25 -535 -5
+-135 -14 -333 -19 -440 -6 -107 -13 -346 -16 -530 -6 -329 -11 -439 -40 -850
+-34 -469 -101 -925 -191 -1294 -13 -54 -24 -110 -24 -122 0 -13 -6 -24 -12
+-24 -8 0 -6 -5 4 -11 15 -8 715 -15 724 -7 3 4 -5 40 -35 148 -92 335 -157
+716 -191 1120 -5 58 -16 186 -24 285 -37 456 -44 778 -52 2470 -3 737 -8 1341
+-9 1343 -2 2 -5 0 -8 -5z M4081 5260 c-1 -30 -5 -190 -11 -355 -37 -1201 -19
+-1900 70 -2735 18 -164 64 -449 101 -615 11 -49 22 -97 23 -105 43 -202 213
+-695 266 -770 11 -15 17 -35 14 -44 -5 -12 0 -16 22 -16 411 -2 599 1 607 9 8
+8 7 11 -1 11 -7 0 -12 5 -12 12 0 6 -17 34 -38 62 -96 127 -142 193 -205 298
+-111 182 -271 525 -327 697 -10 31 -25 74 -33 96 -61 166 -191 684 -217 865
+-4 30 -15 93 -23 140 -14 75 -34 203 -67 445 -5 39 -14 122 -20 185 -6 63 -15
+158 -20 210 -23 243 -42 524 -81 1200 -6 102 -15 218 -20 258 -5 40 -9 94 -10
+120 -1 72 -17 100 -18 32z M3497 4898 c-32 -638 -97 -1331 -167 -1783 -5 -33
+-14 -94 -20 -135 -50 -373 -162 -873 -270 -1200 -44 -132 -62 -179 -145 -379
+-87 -210 -237 -468 -390 -671 -23 -30 -44 -63 -48 -72 -3 -10 -12 -18 -19 -18
+-9 0 -8 -3 2 -10 9 -6 143 -10 326 -10 312 0 312 0 312 23 -1 12 20 68 45 124
+66 148 151 405 197 598 12 50 25 106 30 125 12 45 59 314 69 395 5 33 15 110
+24 170 24 167 46 356 57 495 41 533 43 577 36 1295 -7 785 -16 1185 -26 1185
+-4 0 -10 -60 -13 -132z M10625 3305 c-139 -16 -160 -21 -268 -56 -286 -95
+-558 -308 -708 -554 -13 -22 -30 -49 -36 -60 -73 -119 -138 -303 -171 -485
+-67 -361 -50 -644 50 -860 197 -427 654 -639 1173 -545 49 9 94 20 99 25 6 6
+19 10 29 10 32 0 245 110 315 162 123 93 292 275 292 314 0 7 -32 34 -72 60
+-39 26 -132 87 -206 135 -75 49 -143 89 -153 89 -10 0 -37 -18 -61 -40 -143
+-132 -368 -191 -539 -140 -204 61 -314 179 -369 395 -37 148 -26 242 53 450
+122 319 316 483 604 510 144 13 281 -35 382 -133 66 -64 63 -65 203 21 57 35
+163 99 237 143 74 43 136 84 138 90 7 20 -93 159 -164 227 -139 136 -308 212
+-542 243 -123 16 -138 16 -286 -1z M19305 3305 c-377 -50 -702 -262 -936 -610
+-300 -446 -353 -1052 -129 -1472 95 -178 211 -294 391 -392 302 -164 705 -169
+1052 -12 291 131 512 354 665 672 57 116 81 186 110 315 39 172 42 197 42 347
+-1 299 -60 519 -195 721 -168 252 -417 398 -740 436 -106 12 -140 11 -260 -5z
+m209 -599 c182 -35 295 -147 366 -361 33 -100 34 -322 1 -439 -63 -228 -195
+-411 -372 -518 -103 -62 -253 -96 -347 -78 -188 36 -281 95 -380 240 -70 103
+-87 172 -87 355 1 137 4 170 23 233 33 106 75 194 127 267 174 244 411 350
+669 301z M6439 3262 l-227 -2 -15 -88 c-32 -178 -47 -269 -56 -327 -9 -67 -75
+-469 -91 -555 -20 -112 -51 -298 -65 -390 -8 -52 -21 -133 -29 -180 -8 -47
+-20 -120 -26 -162 -7 -43 -17 -75 -21 -72 -14 9 -10 -7 11 -40 10 -18 76 -86
+146 -151 70 -66 134 -127 143 -136 39 -40 181 -149 194 -149 16 0 31 45 51
+160 17 94 36 201 66 363 11 59 29 158 40 220 43 231 62 322 70 331 6 6 17 -10
+29 -37 11 -25 42 -95 69 -154 27 -59 69 -151 92 -203 23 -52 50 -113 61 -135
+10 -22 60 -134 110 -250 50 -115 97 -217 106 -225 18 -18 37 2 183 195 54 72
+153 202 221 290 67 88 159 207 203 265 182 237 186 242 186 199 0 -12 -7 -65
+-15 -118 -9 -53 -25 -152 -36 -221 -11 -69 -28 -177 -39 -240 -10 -63 -28
+-173 -39 -245 -11 -71 -25 -161 -31 -200 -36 -224 -35 -216 -20 -225 7 -4 135
+-6 284 -3 304 6 291 2 301 82 3 25 14 98 25 161 11 63 29 171 40 240 33 199
+59 356 80 480 11 63 29 174 40 245 12 72 28 168 37 215 9 47 19 112 23 145 4
+33 15 103 24 155 9 52 25 147 36 210 11 63 26 156 34 205 9 50 18 110 22 135
+3 25 12 78 20 119 11 54 12 77 4 85 -13 13 -462 22 -544 11 -47 -6 -54 -10
+-91 -59 -22 -30 -134 -179 -249 -332 -115 -154 -231 -308 -259 -344 -27 -36
+-92 -123 -145 -193 -55 -74 -101 -127 -109 -125 -8 2 -57 100 -109 218 -52
+118 -108 243 -124 278 -17 35 -30 65 -30 67 0 3 -13 34 -30 70 -16 36 -30 68
+-30 70 0 7 -142 329 -149 337 -9 10 -117 13 -372 10z M8915 3262 c-32 -8 -36
+-17 -55 -152 -5 -41 -16 -111 -24 -155 -8 -44 -24 -138 -36 -210 -11 -71 -27
+-166 -35 -210 -8 -44 -26 -152 -40 -240 -23 -148 -43 -265 -80 -485 -8 -47
+-26 -157 -40 -245 -14 -88 -34 -209 -45 -270 -64 -366 -82 -487 -71 -498 4 -4
+135 -10 292 -14 327 -7 305 -13 320 89 5 35 13 85 19 111 5 26 14 80 20 120 5
+40 14 97 20 127 6 30 14 82 19 115 11 81 78 480 96 580 9 44 19 112 25 150 5
+39 23 151 40 250 18 99 35 207 40 240 5 33 15 96 23 140 26 136 47 257 57 330
+5 39 14 103 21 143 6 40 8 76 4 80 -9 9 -530 12 -570 4z M11808 3258 c-11 -8
+-21 -40 -27 -83 -5 -38 -33 -205 -61 -370 -29 -165 -55 -322 -60 -350 -4 -27
+-15 -93 -23 -145 -46 -270 -80 -474 -92 -552 -8 -48 -21 -129 -30 -180 -9 -51
+-25 -147 -36 -213 -11 -66 -29 -169 -39 -230 -10 -60 -26 -151 -34 -201 -28
+-162 -62 -145 281 -142 341 3 302 -12 323 128 7 41 16 95 20 120 5 25 14 77
+20 115 7 39 16 90 21 113 5 24 16 87 24 140 29 198 55 335 66 348 10 12 68 14
+338 12 l326 -3 -2 -68 c0 -38 -11 -121 -22 -185 -11 -65 -39 -229 -61 -367
+-22 -137 -44 -272 -49 -298 -6 -34 -5 -50 3 -53 6 -2 142 -3 301 -2 290 3 290
+3 297 38 7 33 20 115 68 405 11 66 29 172 40 235 10 63 22 131 24 150 3 19 10
+61 16 93 5 31 14 83 20 115 5 33 14 87 20 120 5 33 16 103 25 155 46 275 54
+328 58 355 6 39 34 205 46 270 6 28 15 84 22 125 6 41 20 120 30 174 14 71 16
+103 9 110 -14 14 -578 12 -592 -2 -5 -5 -15 -49 -24 -98 -8 -49 -21 -123 -29
+-164 -8 -41 -17 -97 -20 -125 -4 -27 -13 -84 -20 -125 -8 -41 -23 -138 -35
+-215 -12 -77 -24 -153 -28 -170 -8 -30 -8 -30 -336 -33 -242 -2 -332 1 -343
+10 -16 13 -15 17 17 211 11 64 29 170 39 235 35 210 61 366 70 417 14 76 20
+75 -294 75 -202 0 -275 -3 -287 -12z M13878 3259 c-10 -5 -18 -19 -18 -30 0
+-11 -9 -66 -19 -122 -25 -131 -43 -240 -95 -557 -8 -52 -29 -176 -46 -275 -17
+-99 -35 -205 -40 -235 -11 -78 -54 -328 -95 -565 -8 -44 -17 -96 -19 -115 -7
+-45 -42 -253 -67 -395 -35 -197 -132 -174 734 -177 413 -2 770 -1 791 2 47 6
+46 2 75 200 12 80 26 168 31 195 5 28 12 73 15 101 6 51 6 51 -27 58 -18 4
+-230 6 -471 6 -240 -1 -442 2 -448 6 -11 7 -6 89 11 174 5 25 14 77 20 115 26
+162 -27 145 468 145 240 0 442 4 447 8 12 8 30 77 46 177 6 39 19 117 30 175
+23 129 24 166 3 174 -9 3 -209 6 -446 6 l-431 0 7 73 c6 64 39 252 52 300 5
+16 36 17 478 17 367 0 476 3 483 13 6 6 16 50 23 97 6 47 16 103 21 125 5 22
+16 83 24 135 8 52 17 111 21 131 5 32 3 37 -17 42 -42 11 -1522 7 -1541
+-4z M15640 3261 c-45 -6 -45 -6 -56 -81 -14 -94 -79 -488 -99 -595 -8 -44 -26
+-152 -39 -240 -14 -88 -30 -182 -36 -210 -10 -54 -57 -335 -71 -425 -7 -52 -19
+-120 -54 -320 -30 -173 -95 -571 -95 -585 0 -13 73 -15 603 -13 l602 3 13 60
+c17 78 50 238 62 295 5 25 14 70 21 102 20 94 40 88 -290 88 -209 0 -292 3
+-297 12 -14 22 3 152 53 418 8 47 19 110 23 140 4 30 15 98 24 150 9 52 26 149
+37 215 11 66 24 143 29 170 4 28 13 79 19 115 25 158 66 403 81 480 21 108 33
+210 26 217 -9 10 -493 13 -556 4z M17140 3263 c-14 -3 -28 -8 -32 -11 -4 -4
+-16 -63 -28 -132 -40 -240 -61 -366 -75 -445 -8 -44 -19 -109 -24 -145 -6 -36
+-25 -157 -44 -270 -19 -113 -37 -221 -40 -240 -3 -19 -37 -224 -77 -455 -39
+-231 -75 -449 -80 -485 -5 -36 -16 -100 -25 -143 -20 -107 -20 -147 3 -148 82
+-3 1168 3 1173 7 10 6 24 53 38 129 28 144 46 229 67 318 8 38 13 75 10 83 -4
+12 -55 14 -293 14 -158 0 -294 4 -302 9 -16 10 -6 106 25 256 8 39 19 102 24
+140 10 77 33 215 56 340 8 44 18 109 23 145 5 36 15 101 24 145 8 44 25 141 36
+215 12 74 25 155 30 180 5 25 15 81 21 125 7 44 21 124 31 179 26 136 26 182
+-3 190 -26 7 -499 6 -538 -1z"/>
+</g>
+<g transform="translate(0.000000,722.000000) scale(0.100000,-0.100000)"
+fill="var(--tinta-marca)" stroke="none">
+<path d="M6845 5820 c-259 -32 -492 -153 -684 -356 -187 -197 -295 -423 -353
+-734 -6 -37 -11 -148 -11 -255 0 -172 3 -200 27 -295 15 -57 42 -137 61 -178
+19 -41 35 -76 35 -79 0 -3 25 -37 55 -76 110 -141 244 -230 425 -282 84 -24
+113 -27 245 -27 158 -1 234 12 365 64 111 44 303 168 317 204 5 13 -187 327
+-208 340 -6 3 -36 -12 -67 -34 -129 -90 -229 -119 -348 -103 -119 17 -183 48
+-243 117 -77 87 -106 198 -105 395 2 208 41 359 136 524 47 81 185 222 244 249
+21 10 51 24 65 31 15 7 62 18 105 25 111 17 168 -4 255 -97 59 -64 63 -66 85
+-52 50 31 326 251 330 264 10 24 -45 101 -126 178 -82 79 -194 143 -291 166
+-66 15 -231 21 -314 11z M8532 5820 c-468 -65 -854 -457 -977 -995 -61
+-265 -36 -626 56 -816 16 -33 29 -62 29 -66 0 -18 121 -170 172 -214 97 -84
+187 -129 358 -176 68 -18 334 -22 400 -4 137 35 158 43 270 98 316 156 558
+484 644 873 48 218 49 508 2 683 -103 384 -376 603 -771 620 -66 3 -148 2
+-183 -3z m235 -496 c64 -31 97 -69 138 -159 44 -96 59 -195 53 -357 -10 -272
+-96 -491 -253 -652 -147 -149 -307 -189 -441 -111 -128 75 -195 266 -180 515
+18 305 124 542 311 696 123 100 254 124 372 68z M12358 5820 c-228 -28 -434
+-135 -619 -319 -290 -290 -435 -721 -389 -1159 44 -413 246 -675 600 -777 84
+-24 112 -27 245 -27 110 0 167 4 215 17 36 9 76 19 90 22 43 9 225 99 290 143
+201 137 388 394 475 655 69 206 98 531 65 717 -69 381 -271 620 -600 707 -87
+23 -274 33 -372 21z m161 -471 c126 -27 203 -120 247 -299 16 -67 18 -321 3
+-388 -5 -26 -15 -67 -21 -92 -35 -152 -122 -314 -226 -417 -146 -147 -305
+-186 -439 -108 -166 98 -224 403 -143 749 65 275 252 501 455 552 64 16 65 16
+124 3z M9903 5779 c-9 -11 -39 -143 -66 -289 -3 -14 -21 -106 -41 -205 -19
+-99 -41 -205 -47 -235 -6 -30 -15 -73 -19 -95 -5 -22 -11 -51 -13 -65 -6 -35
+-74 -376 -86 -430 -6 -25 -15 -72 -21 -105 -7 -33 -15 -78 -20 -100 -5 -22
+-14 -67 -20 -100 -6 -33 -16 -78 -20 -100 -5 -22 -14 -67 -20 -100 -7 -33 -16
+-78 -21 -100 -30 -134 -51 -256 -46 -270 6 -13 41 -15 266 -15 238 0 261 2
+270 18 5 9 30 125 56 257 81 420 93 477 100 483 4 4 51 9 104 10 76 3 101 1
+112 -11 8 -8 69 -176 134 -373 65 -198 123 -365 128 -371 12 -17 552 -19 562
+-3 4 6 -11 57 -33 113 -22 56 -67 172 -100 257 -52 134 -164 421 -179 457 -3
+7 15 22 44 35 279 133 443 355 474 646 40 381 -123 598 -510 679 -108 22 -971
+32 -988 12z m762 -433 c151 -32 214 -112 202 -257 -12 -144 -83 -236 -222
+-289 -51 -20 -85 -24 -223 -28 -90 -2 -167 0 -171 4 -5 5 8 92 28 194 21 102
+45 225 54 274 10 49 22 95 28 103 15 17 221 17 304 -1z M13722 5777 c-6 -7
+-16 -42 -22 -77 -16 -86 -35 -184 -191 -960 -6 -30 -15 -73 -19 -95 -5 -22
+-11 -51 -13 -65 -3 -14 -29 -149 -60 -300 -30 -151 -57 -286 -60 -300 -14 -74
+-58 -292 -68 -336 -6 -29 -9 -57 -5 -63 8 -13 483 -16 502 -3 6 4 21 57 33
+117 12 61 25 128 30 150 5 22 14 65 20 95 14 72 41 204 53 260 21 100 46 250
+59 348 10 83 33 321 45 465 3 48 10 87 15 87 5 0 9 -2 9 -4 0 -2 14 -68 30
+-147 17 -79 40 -187 50 -239 11 -52 29 -126 40 -165 12 -38 26 -85 31 -102 5
+-18 13 -48 18 -65 5 -18 28 -96 51 -173 43 -146 52 -176 69 -235 61 -220 113
+-385 123 -392 7 -4 124 -8 261 -8 247 0 247 0 257 23 8 17 87 397 140 672 4
+22 17 87 28 145 11 58 44 220 73 360 28 140 54 266 56 280 3 14 30 149 60 300
+68 338 76 378 77 410 1 25 1 25 -248 28 -137 1 -253 -1 -257 -5 -12 -12 -146
+-678 -173 -858 -20 -128 -56 -526 -56 -613 0 -99 -24 -59 -56 93 -9 44 -20 96
+-24 115 -4 19 -15 71 -25 115 -9 44 -32 134 -52 200 -19 66 -38 134 -43 150
+-4 17 -36 125 -70 240 -34 116 -70 239 -80 275 -47 164 -79 270 -85 280 -10
+16 -510 14 -523 -3z M15802 5777 c-15 -18 -446 -2173 -438 -2192 5 -13 89 -15
+688 -13 683 3 683 3 695 53 19 76 73 361 73 385 0 20 -3 20 -410 20 -476 0
+-427 -22 -384 175 40 192 44 208 50 243 7 32 7 32 344 32 258 0 340 3 347 13
+10 12 13 27 53 242 12 61 25 126 31 146 5 20 9 41 9 48 0 8 -92 11 -335 11
+-287 0 -336 2 -341 15 -5 13 9 96 51 310 l12 60 402 3 c464 3 407 -15 435 137
+20 106 32 163 46 227 5 26 10 58 10 72 0 26 0 26 -664 26 -534 0 -666 -3 -674
+-13z M17520 5768 c-13 -29 -433 -2123 -434 -2163 -1 -30 -1 -30 667 -33 667
+-2 667 -2 676 20 13 31 71 343 74 393 2 40 2 40 -386 43 -342 2 -388 4 -394
+18 -5 14 1 51 27 169 4 22 13 65 19 95 6 30 22 111 37 180 14 69 33 168 43
+220 11 52 56 277 101 500 102 503 99 486 106 538 7 42 7 42 -260 42 -266 0
+-266 0 -276 -22z M3140 4503 c0 -26 -4 -97 -10 -157 -5 -61 -14 -181 -20 -266
+-25 -357 -62 -615 -140 -980 -11 -52 -24 -111 -29 -130 -38 -141 -52 -193 -69
+-250 -42 -137 -116 -348 -142 -406 -11 -22 -28 -63 -39 -91 -26 -66 -129 -279
+-184 -378 -239 -435 -547 -795 -927 -1081 -187 -141 -165 -134 -434 -134 -156
+0 -227 3 -224 11 2 5 62 41 133 78 326 169 567 343 805 582 300 300 504 608
+685 1034 101 235 183 552 224 860 47 355 50 975 5 1183 -8 38 -22 15 -29 -46
+-3 -31 -10 -88 -15 -127 -5 -38 -14 -113 -20 -165 -6 -52 -15 -129 -20 -170
+-5 -41 -14 -118 -20 -170 -25 -210 -61 -418 -95 -542 -8 -32 -21 -82 -29 -110
+-24 -93 -123 -379 -156 -453 -10 -22 -34 -78 -54 -125 -205 -473 -539 -945
+-924 -1309 -162 -153 -220 -200 -407 -325 -206 -139 -315 -194 -401 -203 -69
+-8 -69 -8 -69 -53 0 -45 0 -45 9953 -48 9952 -2 9952 -2 9952 48 0 50 0 50
+-6687 52 -6688 3 -6688 3 -6756 36 -37 17 -69 32 -71 32 -24 0 -388 218 -467
+281 -20 16 -44 29 -53 29 -15 0 -154 105 -197 149 -9 9 -75 71 -146 139 -72
+68 -141 142 -154 166 -13 24 -70 100 -127 171 -440 545 -754 1289 -842 1995
+-5 41 -14 111 -20 155 -6 44 -15 116 -20 160 -42 359 -59 475 -69 475 -36 0
+-50 -839 -18 -1093 50 -397 143 -767 259 -1027 314 -708 828 -1250 1490 -1573
+80 -40 145 -76 144 -82 -2 -6 -88 -10 -232 -10 -259 0 -234 -7 -414 124 -133
+97 -387 316 -445 383 -12 12 -57 64 -101 113 -418 472 -700 1075 -884 1890
+-67 296 -126 775 -156 1254 -7 110 -18 167 -27 141 -27 -78 -40 -863 -18
+-1110 86 -945 307 -1667 681 -2225 128 -191 251 -340 392 -475 43 -41 78 -80
+78 -87 0 -13 -308 -21 -750 -20 -351 2 -575 2 -975 0 -890 -4 -1786 4 -1797
+15 -8 8 12 34 83 104 369 362 660 871 819 1433 79 278 157 681 189 970 27 239
+31 294 42 540 10 224 10 299 -4 540 -10 154 -20 290 -23 303 -11 38 -24 24
+-24 -25z"/>
+</g>
+</svg>
+    </h1>
+
+    <!-- FOTO: coloque o arquivo foto.jpg na mesma pasta deste index.html -->
+    <div class="moldura">
+      <div class="foto">
+        <img src="foto.jpg" alt="Coronel Michello">
+      </div>
+    </div>
+    <p class="lema">Uma vida <b>dedicada a servir</b></p>
+    <p class="sublema">Humildade, fé e compromisso com as pessoas</p>
+
+    <div class="ficha">
+      <span>Brasília</span><i>&bull;</i>
+      <span>Distrito Federal</span><i>&bull;</i>
+      <span>2026</span>
+    </div>
+
+    <nav class="botoes">
+      <a class="btn btn--destaque" href="https://tcmichello.com.br" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24"><path d="M12 21s-8-4.9-8-10.4A4.7 4.7 0 0 1 12 7a4.7 4.7 0 0 1 8 3.6C20 16.1 12 21 12 21z"/></svg>
+        Apoiar a campanha <small>Vaquinha</small>
+      </a>
+
+      <a class="btn" href="https://docs.google.com/forms/d/e/1FAIpQLSczCrhnksg8rm-AJNotCWlKxZjhWCvGX9X0lbhoUGydmXUZTQ/viewform" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24"><path d="M16 11a4 4 0 1 0-4-4 4 4 0 0 0 4 4zm-8 0a4 4 0 1 0-4-4 4 4 0 0 0 4 4zm0 2c-2.7 0-8 1.3-8 4v3h8v-3c0-1.1.5-2.3 1.5-3.2A13 13 0 0 0 8 13zm8 0c-.4 0-.9 0-1.4.1 1.2.9 2.4 2.2 2.4 3.9v3H24v-3c0-2.7-5.3-4-8-4z"/></svg>
+        Seja meu amigo <small>Formulário</small>
+      </a>
+
+      <a class="btn" href="https://www.instagram.com/tc_michello" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 3.3.1 4.8 1.7 4.9 4.9.1 1.3.1 1.6.1 4.8s0 3.6-.1 4.9c-.1 3.2-1.7 4.8-4.9 4.9-1.3.1-1.6.1-4.9.1s-3.6 0-4.9-.1c-3.2-.1-4.8-1.7-4.9-4.9-.1-1.3-.1-1.6-.1-4.9s0-3.6.1-4.9C2.3 4 3.9 2.4 7.1 2.3c1.3 0 1.7-.1 4.9-.1zm0 3.9a5.9 5.9 0 1 0 0 11.8 5.9 5.9 0 0 0 0-11.8zm0 9.7a3.8 3.8 0 1 1 0-7.6 3.8 3.8 0 0 1 0 7.6zm6.1-9.9a1.4 1.4 0 1 0 0-2.8 1.4 1.4 0 0 0 0 2.8z"/></svg>
+        Seguir no Instagram <small>Perfil</small>
+      </a>
+
+      <a class="btn" href="https://www.tiktok.com/@tc.michello" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24"><path d="M12.53.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.58.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+        Seguir no TikTok <small>Perfil</small>
+      </a>
+
+      <a class="btn" href="https://wa.me/5561995623696" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2zm5.6 14c-.2.7-1.3 1.3-1.9 1.3-.5 0-1.1.2-3.6-.8-3-1.3-4.9-4.4-5-4.6-.2-.2-1.2-1.6-1.2-3s.8-2.1 1-2.4c.3-.3.6-.4.8-.4h.6c.2 0 .4 0 .7.5l.9 2.2c.1.2.1.4 0 .6l-.4.6c-.1.2-.3.3-.1.6.7 1.2 1.4 1.7 2.5 2.3.2.1.4.1.5-.1l.7-.9c.2-.2.3-.2.6-.1l2 1c.3.1.5.2.5.4 0 .1 0 .6-.2 1.2z"/></svg>
+        Falar no WhatsApp <small>WhatsApp</small>
+      </a>
+    </nav>
+  </div>
+</header>
+
+<!-- ==================== QUEM É ==================== -->
+<section class="bloco revela" id="sobre">
+  <div class="wrap">
+    <div class="divisor">
+      <svg class="nervuras" viewBox="0 0 60 34" fill="none" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
+        <path d="M30 3 C30 16 24 26 13 34" stroke="#F6F7FA"/>
+        <path d="M30 3 C30 18 27 28 21 34" stroke="#D9B046"/>
+        <path d="M30 2 L30 34" stroke="#D9B046"/>
+        <path d="M30 3 C30 18 33 28 39 34" stroke="#D9B046"/>
+        <path d="M30 3 C30 16 36 26 47 34" stroke="#F6F7FA"/>
+      </svg>
+      <span class="regua"></span>
+    </div>
+    <span class="rotulo">Quem é</span>
+    <h2>Do serviço<br>à representação</h2>
+    <!-- EDITE: dois parágrafos curtos com a história dele.
+         O que costuma funcionar: onde nasceu e mora no DF, a trajetória
+         na corporação, a fé, a família, e por que decidiu se candidatar.
+         Escreva só o que for verdade e puder ser comprovado. -->
+    <p>Militar de carreira, o Coronel Michello é oficial da Polícia Militar do Distrito Federal há 28 anos e comandou batalhões da corporação. Foi oficial da Força Nacional e gerenciador de crise, com alta experiência em comando de operações no Rio de Janeiro e no Distrito Federal, além de especializações internacionais. É cidadão do Distrito Federal.</p>
+    <p>É a voz da segurança pública em diálogo constante com a população: sabe onde estão os problemas e como solucioná-los. Agora, como pré-candidato a Deputado Distrital, leva para a vida pública a mesma humildade, fé e compromisso com as pessoas que marcaram uma vida dedicada a servir. O compromisso do Coronel é com você e com a sua família.</p>
+  </div>
+</section>
+
+<!-- ==================== BANDEIRAS ==================== -->
+<section class="bloco revela" id="bandeiras">
+  <div class="wrap">
+    <div class="divisor">
+      <svg class="nervuras" viewBox="0 0 60 34" fill="none" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
+        <path d="M30 3 C30 16 24 26 13 34" stroke="#F6F7FA"/>
+        <path d="M30 3 C30 18 27 28 21 34" stroke="#D9B046"/>
+        <path d="M30 2 L30 34" stroke="#D9B046"/>
+        <path d="M30 3 C30 18 33 28 39 34" stroke="#D9B046"/>
+        <path d="M30 3 C30 16 36 26 47 34" stroke="#F6F7FA"/>
+      </svg>
+      <span class="regua"></span>
+    </div>
+    <span class="rotulo">Bandeiras</span>
+    <h2>No que ele acredita</h2>
+    <!-- EDITE: títulos e frases. Pode ter de 3 a 6 itens. -->
+    <ul class="bandeiras">
+      <li><span class="num">01</span><div>
+        <h3>Segurança sem medo</h3>
+        <p>Segurança efetiva para quem mora no Distrito Federal, feita por quem comandou batalhões da PMDF.</p>
+      </div></li>
+      <li><span class="num">02</span><div>
+        <h3>Diálogo com a população</h3>
+        <p>Ser a voz da segurança pública em conversa constante com quem vive o problema todo dia.</p>
+      </div></li>
+      <li><span class="num">03</span><div>
+        <h3>Experiência que resolve</h3>
+        <p>Gerenciamento de crise e comando de operações no Rio de Janeiro e no DF, com especializações internacionais.</p>
+      </div></li>
+      <li><span class="num">04</span><div>
+        <h3>Você e sua família</h3>
+        <p>Humildade, fé e compromisso com as pessoas: o compromisso do Coronel é com você e com a sua família.</p>
+      </div></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ==================== VAQUINHA ==================== -->
+<section class="vaquinha bloco revela" id="vaquinha">
+  <div class="wrap">
+    <div class="divisor">
+      <svg class="nervuras" viewBox="0 0 60 34" fill="none" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
+        <path d="M30 3 C30 16 24 26 13 34" stroke="#F6F7FA"/>
+        <path d="M30 3 C30 18 27 28 21 34" stroke="#D9B046"/>
+        <path d="M30 2 L30 34" stroke="#D9B046"/>
+        <path d="M30 3 C30 18 33 28 39 34" stroke="#D9B046"/>
+        <path d="M30 3 C30 16 36 26 47 34" stroke="#F6F7FA"/>
+      </svg>
+      <span class="regua"></span>
+    </div>
+    <span class="rotulo">Financiamento coletivo</span>
+    <h2>Uma campanha<br>de muitas mãos</h2>
+    <p>Essa campanha se sustenta com a doação de quem acredita no trabalho. Qualquer valor entra pelo QueroApoiar, plataforma de vaquinha eleitoral homologada pelo TSE, com a lista de doações aberta para consulta.</p>
+
+    <div class="meta">
+      <div class="trilho"><div class="barra" id="barra"></div></div>
+      <div class="valores">
+        <!-- Estes números são o "plano B": aparecem enquanto o site do QueroApoiar
+             é consultado, e continuam na tela caso a consulta não funcione.
+             Vale atualizá-los de vez em quando conforme tcmichello.com.br. -->
+        <span>Arrecadado <b id="arrecadado">R$ 5.980,00</b></span>
+        <span>Meta <b>R$ 500.000,00</b></span>
+      </div>
+      <p class="aovivo" id="aovivo">Valor atualizado direto da plataforma</p>
+    </div>
+
+    <div class="botoes">
+      <a class="btn" href="https://tcmichello.com.br" target="_blank" rel="noopener">Doar agora</a>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== RODAPÉ ==================== -->
+<footer>
+  <div class="wrap">
+    <p>
+      Coronel Michello &bull; Pré-candidato a Deputado Distrital &bull; Podemos<br>
+      @tc_michello<br>
+      CNPJ de campanha 68.462.311/0001-06
+    </p>
+  </div>
+</footer>
+
+<!-- ==================== BARRA FIXA ==================== -->
+<div class="fixa">
+  <div class="wrap">
+    <a href="https://tcmichello.com.br" target="_blank" rel="noopener">Apoiar a campanha</a>
+    <button id="compartilhar" aria-label="Compartilhar esta página">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M18 16a3 3 0 0 0-2 .8L9 13a3 3 0 0 0 0-2l7-3.8A3 3 0 1 0 15 5c0 .3 0 .6.1.8L8 9.7a3 3 0 1 0 0 4.6l7.1 3.9c0 .2-.1.5-.1.8a3 3 0 1 0 3-3z"/></svg>
+    </button>
+  </div>
+</div>
+
+<script>
+document.getElementById('compartilhar').addEventListener('click', async () => {
+  const dados = {title: document.title, url: location.href};
+  try {
+    if (navigator.share) { await navigator.share(dados); }
+    else { await navigator.clipboard.writeText(location.href); alert('Link copiado.'); }
+  } catch (e) {}
+});
+
+const obs = new IntersectionObserver(function(entradas){
+  entradas.forEach(function(e){
+    if (e.isIntersecting) { e.target.classList.add('visivel'); obs.unobserve(e.target); }
+  });
+}, {threshold: .12});
+document.querySelectorAll('.revela').forEach(function(el){ obs.observe(el); });
+
+/* ============================================================
+   VALOR AO VIVO DA VAQUINHA
+   Lê o total direto da página do QueroApoiar e atualiza número e barra.
+   Repete a cada 60 segundos. Se falhar, o número do HTML fica na tela.
+   ============================================================ */
+(function(){
+  const META = 500000;
+  const ORIGENS = [
+    'https://tcmichello.com.br/',
+    'https://queroapoiar.com.br/coronelmichello'
+  ];
+  // Passagens para contornar o bloqueio de origem cruzada (CORS).
+  const CAMINHOS = [
+    u => u,
+    u => 'https://api.allorigins.win/raw?url=' + encodeURIComponent(u),
+    u => 'https://corsproxy.io/?url=' + encodeURIComponent(u),
+    u => 'https://r.jina.ai/' + u
+  ];
+
+  const elValor = document.getElementById('arrecadado');
+  const elBarra = document.getElementById('barra');
+  const elNota  = document.getElementById('aovivo');
+  if (!elValor) return;
+
+  function extrair(html){
+    const texto = html
+      .replace(/<[^>]+>/g, ' ')
+      .replace(/&nbsp;/g, ' ')
+      .replace(/\s+/g, ' ');
+    const padroes = [
+      /Total\s*arrecadado[^0-9]{0,40}R\$\s*([\d.]*\d,\d{2})/i,
+      /R\$\s*([\d.]*\d,\d{2})\s*arrecadad/i,
+      /arrecadad\w*[^0-9]{0,40}R\$\s*([\d.]*\d,\d{2})/i
+    ];
+    for (const p of padroes){
+      const m = texto.match(p);
+      if (!m) continue;
+      const n = parseFloat(m[1].replace(/\./g, '').replace(',', '.'));
+      if (!isNaN(n) && n > 0) return n;
+    }
+    return null;
+  }
+
+  function mostrar(valor){
+    elValor.textContent = valor.toLocaleString('pt-BR', {
+      style: 'currency', currency: 'BRL'
+    });
+    const pct = Math.min(100, (valor / META) * 100);
+    elBarra.style.width = pct.toFixed(2) + '%';
+    if (elNota) elNota.textContent = 'Atualizado agora · ' + pct.toFixed(1) + '% da meta';
+  }
+
+  async function buscar(){
+    for (const origem of ORIGENS){
+      const alvo = origem + (origem.includes('?') ? '&' : '?') + '_=' + Date.now();
+      for (const caminho of CAMINHOS){
+        try{
+          const r = await fetch(caminho(alvo), {cache: 'no-store'});
+          if (!r.ok) continue;
+          const valor = extrair(await r.text());
+          if (valor !== null){ mostrar(valor); return; }
+        }catch(e){ /* tenta o próximo caminho */ }
+      }
+    }
+    // Nenhum caminho funcionou: mantém o número do HTML, sem alarde.
+    if (elNota) elNota.textContent = 'Confira o total atualizado na plataforma';
+  }
+
+  buscar();
+  setInterval(buscar, 60000);
+})();
+</script>
+</body>
+</html>
