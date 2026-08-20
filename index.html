@@ -42,7 +42,7 @@
   --dado:'IBM Plex Mono',ui-monospace,monospace;
 
   /* quanto da meta já foi arrecadado (o script atualiza sozinho) */
-  --progresso:1.2%;
+  --progresso:5.07%;
 }
 
 *{box-sizing:border-box;margin:0;padding:0}
@@ -323,8 +323,8 @@ footer p{font-family:var(--dado);font-size:10.5px;line-height:2.1;color:var(--co
         <!-- Estes números são o "plano B": aparecem enquanto o site do QueroApoiar
              é consultado, e continuam na tela caso a consulta não funcione.
              Vale atualizá-los de vez em quando conforme tcmichello.com.br. -->
-        <span>Arrecadado <b id="arrecadado">R$ 5.980,00</b></span>
-        <span>Meta <b>R$ 500.000,00</b></span>
+                <span>Arrecadado <b id="arrecadado">R$ 7.605,00</b></span>
+        <span>Meta <b>R$ 150.000,00</b></span>
       </div>
       <p class="aovivo" id="aovivo">Valor atualizado direto da plataforma</p>
     </div>
@@ -378,7 +378,7 @@ document.querySelectorAll('.revela').forEach(function(el){ obs.observe(el); });
    Repete a cada 60 segundos. Se falhar, o número do HTML fica na tela.
    ============================================================ */
 (function(){
-  const META = 500000;
+    const META = 150000;
   const ORIGENS = [
     'https://tcmichello.com.br/',
     'https://queroapoiar.com.br/coronelmichello'
